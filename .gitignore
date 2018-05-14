@@ -1,2 +1,4 @@
 files/*
 esmail/files/*
+*.csv
+*.png
