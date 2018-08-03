@@ -6,8 +6,8 @@ import statsmodels.api as sm
 import matplotlib.pyplot as plt
 from scipy import stats
 
-a = list(np.genfromtxt(sys.argv[1], delimiter=','))
-b = list(np.genfromtxt(sys.argv[2], delimiter=','))
+a = list(np.genfromtxt(sys.argv[1], delimiter=',',usecols=np.arange(0,12), invalid_raise = False))
+b = list(np.genfromtxt(sys.argv[2], delimiter=',',usecols=np.arange(0,12), invalid_raise = False))
 print(a)
 
 x = []
