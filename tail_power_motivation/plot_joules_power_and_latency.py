@@ -5,7 +5,16 @@ import sys
 import statsmodels.api as sm
 import matplotlib.pyplot as plt
 from scipy import stats
+import matplotlib
+font = {'family' : 'normal',
+        # 'weight' : 'bold',
+        'size'   : 14}
+font_label = {'family' : 'normal',
+        # 'weight' : 'bold',
+        'size'   : 14}
 
+plt.rc('font', **font)
+plt.rc('legend', fontsize=11)
 # power files on -- off
 a = list(np.genfromtxt(sys.argv[1], delimiter=','))
 b = list(np.genfromtxt(sys.argv[2], delimiter=','))
@@ -48,16 +57,16 @@ off_999 = [i[4] for i in d]
 
 ##############
 fig, (axs,ax2) = plt.subplots(1,2,figsize=(14,6))
-axs.set_ylabel('Latency (us)')
+axs.set_ylabel('Latency (us)',**font_label)
 # plt.title('Request Latency of different loads')
 # axs.set_yticks(np.arange(0, 800, 10))
-axs.set_ylim(150,400)
+axs.set_ylim(50,250)
 # axs.grid()
 axs.set_xticks(np.arange(0,60,10))
-axs.set_xticklabels(np.arange(0,60,10))
-axs.set_xlabel('Request Rate (thaousend request per second)')
+axs.set_xticklabels(np.arange(0,110,20))
+axs.set_xlabel("Request Rate (x" + r'$10^3$' + " RPS)",**font_label)
 
-p1,p2, p3, p4 = axs.plot(x, on_999, 'k', x, off_999, 'k:', x, on_95, 'c', x, off_95, 'c:')
+p1,p2, p3, p4 = axs.plot(x, on_999, 'k', x, off_999, 'c', x, on_95, 'k:', x, off_95, 'c:')
 plt.setp(p1, linewidth=3.0)
 plt.setp(p2, linewidth=3.0)
 plt.setp(p3, linewidth=2.0)
@@ -72,29 +81,31 @@ axs.legend((p1, p2, p3, p4), ('Default Linux-99.9th', 'C-states Disabled-99.9th'
 bplot1 = ax2.boxplot(a, 0, '',patch_artist=True)
 bplot2 = ax2.boxplot(b, 0, '',patch_artist=True)
 
-colors = ['lightgreen', 'lightblue', 'red', 'orange']
+colors = ['lightblue', 'cyan', 'red', 'black']
 
 for element in ['boxes','whiskers', 'fliers', 'means', 'medians', 'caps']:
-    plt.setp(bplot1[element], color=colors[1])
-for patch in bplot1['boxes']:
-    patch.set_facecolor(colors[0])
-for element in ['boxes','whiskers', 'fliers', 'means', 'medians', 'caps']:
-    plt.setp(bplot2[element], color=colors[3])
+    plt.setp(bplot2[element], color=colors[1])
 for patch in bplot2['boxes']:
+    patch.set_facecolor(colors[0])
+    patch.set(linewidth=3)
+for element in ['boxes','whiskers', 'fliers', 'means', 'medians', 'caps']:
+    plt.setp(bplot1[element], color=colors[3])
+for patch in bplot1['boxes']:
     patch.set_facecolor(colors[2])
-ax2.set_ylabel('CPU Power Consumption (W)')
-plt.xlabel('Request Rate (x1000 requests per second)')
+    patch.set(linewidth=3)
+ax2.set_ylabel('CPU Power Consumption (W)',**font_label)
+plt.xlabel("Request Rate (x" + r'$10^3$' + " RPS)",**font_label)
 # plt.title('Power Consumption of Memcached in different Loads')
 # ax2.set_xticklabels(x2, rotation='90')
-ax2.set_xticks(np.arange(0,100,5))
-ax2.set_xticklabels(["0", "20","40", "60", "80", "100"])
+ax2.set_xticks(np.arange(1,21,1))
+ax2.set_xticklabels(["1", "10","20","30","40","50", "60", "70", "80", "90", "100"])
 # ax2.set_xticks(np.arange(1000,50000,5000))
 # ax2.set_xticklabels(np.arange(1000,50000,5000))
 ax2.xaxis.grid(which="major")
 axs.xaxis.grid(which="major")
 # ax2.set_yticks(np.arange(0, 40, 10))
-ax2.set_ylim(10,35)
-ax2.set_xlim(0,26)
+ax2.set_ylim(15,35)
+ax2.set_xlim(0,11)
 axs.set_xlim(1,50)
 
 # locs, labs = plt.xticks()

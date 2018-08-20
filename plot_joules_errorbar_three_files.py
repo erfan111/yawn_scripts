@@ -52,7 +52,7 @@ plt.grid(axis='both', which='both')
 # else:
 # 	p1 = plt.plot(x, a, 'g')
 # 	plt.legend((p1), ('File1'))
-axs.legend([bplot1["boxes"][0], bplot2["boxes"][0]], ['MENU', 'YAWN'], loc='upper right')
+axs.legend([bplot1["boxes"][0], bplot2["boxes"][0]], ['MENU', 'YAWN'])
 #
 # #plt.savefig('avg.png', format='png', dpi=300)
 plt.show()
