@@ -2,14 +2,20 @@
 status=1
 while true
 do
-  temp=`cat /sys/kernel/yawn/cpu7_status`
-  if [$temp -ne $status ]
-    if [$temp -eq 1 ]
-        echo 1 > /sys/devices/system/cpu/cpu7/online
+  temp=`cat /sys/kernel/yawn/spare_status`
+#  echo $temp
+  if [[ $temp -ne $status ]];
+  then
+    if [[ $temp -eq 1 ]];
+    then
+        echo 1 > /sys/devices/system/cpu/cpu6/online
+	echo 1 > /sys/devices/system/cpu/cpu7/online
     else
-        echo 0 > /sys/devices/system/cpu/cpu7/online
+        echo 0 > /sys/devices/system/cpu/cpu6/online
+	echo 0 > /sys/devices/system/cpu/cpu7/online
+
     fi
-    $state=$temp
+    status=$temp
   fi
  sleep 2
 done
