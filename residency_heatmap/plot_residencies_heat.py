@@ -5,7 +5,15 @@ import sys
 import statsmodels.api as sm
 import matplotlib.pyplot as plt
 from matplotlib import ticker
+font = {'family' : 'normal',
+        # 'weight' : 'bold',
+        'size'   : 14}
+font_label = {'family' : 'normal',
+        # 'weight' : 'bold',
+        'size'   : 10}
 
+plt.rc('font', **font)
+plt.rc('legend', fontsize=11)
 convertfunc = lambda x: float(x[0:-2])
 a = []
 for i in range(8):
@@ -49,12 +57,12 @@ for i in range(len(b)):
 fig, ax = plt.subplots(figsize=(8,4))
 print("a", a)
 im = plt.imshow(a, cmap='hot_r', interpolation='nearest',vmin=1, vmax=6)
-ax.set_xticks(np.arange(0, 40, 5))
-ax.set_xlim(0,40)
-ax.set_xticklabels(np.arange(0, 40, 5))
-ax.set_xlabel("Request Rate (x1000 requests per second)")
+ax.set_xticks(np.arange(0, 55, 5))
+# ax.set_xlim(0,50)
+ax.set_xticklabels(np.arange(0, 55, 5))
+ax.set_xlabel("Request Rate (x" + r'$10^3$' + " RPS)")
 ax.set_yticks(np.arange(0, 8, 1))
-ax.set_yticklabels(np.arange(1, 9, 1))
+ax.set_yticklabels(np.arange(1, 9, 1), **font_label)
 ax.set_ylabel("Core Number")
 
 cbar = ax.figure.colorbar(im,ticks=[], orientation='horizontal', pad=0.2)
@@ -64,7 +72,7 @@ cbar.ax.invert_xaxis()
 # cbar.ax.tick_params(labelsize=10)
 # cbar.update_ticks()
 # cbar.ax.set_xticklabels([])  # horizontal colorbar
-cbar.set_label("Deeper                                                                                                                Shallower")
+cbar.set_label("Deeper Sleep                                                     Shallower Sleep")
 
 plt.legend()
 

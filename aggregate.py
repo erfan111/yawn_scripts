@@ -21,14 +21,14 @@ agg_999 = []
 for rate in range(num_of_rates):
 	temp_sum = 0
 	agg_avg.append(0)
-        agg_95.append(0)
-        agg_99.append(0)
-        agg_999.append(0)
+	agg_95.append(0)
+	agg_99.append(0)
+	agg_999.append(0)
 	for experiment in range(num_of_exp):
 		agg_avg[rate] += latency_matrix[experiment][rate][1]
 		agg_95[rate] += latency_matrix[experiment][rate][2]
 		agg_99[rate] += latency_matrix[experiment][rate][3]
-        	agg_999[rate] += latency_matrix[experiment][rate][4]
+		agg_999[rate] += latency_matrix[experiment][rate][4]
 
 with open(sys.argv[3], "w") as f:
 	for i in range(len(rates)):

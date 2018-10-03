@@ -4,7 +4,15 @@ import numpy as np
 import sys
 import statsmodels.api as sm
 import matplotlib.pyplot as plt
+font = {'family' : 'normal',
+        # 'weight' : 'bold',
+        'size'   : 14}
+font_label = {'family' : 'normal',
+        # 'weight' : 'bold',
+        'size'   : 10}
 
+plt.rc('font', **font)
+plt.rc('legend', fontsize=14)
 convertfunc = lambda x: float(x[0:-2])
 a = []
 for i in range(8):
@@ -29,7 +37,7 @@ for i in range(len(a)):
     b.append(temp)
     x.append(xx)
 
-fig, ax = plt.subplots(figsize=(5,5))
+fig, ax = plt.subplots(figsize=(6,6))
 
 # # print(b)
 # for i in range(4):
@@ -61,16 +69,16 @@ fig, ax = plt.subplots(figsize=(5,5))
 #     plt.xlim(1000,50000)
 #     plt.ylim(0,100)
 #     plt.title("Core" + str(i))
-
-b[1] = list(zip(*b[1]))
+xx = 1
+b[xx] = list(zip(*b[xx]))
 # print(len(b[i]))
-y = np.vstack(b[1])
+y = np.vstack(b[xx])
 print(y)
 # for i in range(len(x[1])):
 #     x[1][i] = x[1][i]/1000
 labels = ["BUSY","POLL", "c1", "c1e", "c3", "c6"]
-plt.stackplot(x[1], y, labels=labels, colors=["b","m","r","y","g","k"])
-plt.ylabel("% residency")
+plt.stackplot(x[1], y, labels=labels, colors=["khaki","gold","orange","red","darkred", "black"])
+plt.ylabel("% Residency")
 plt.legend(prop={'size': 8})
 plt.xlim(1000,50000)
 plt.ylim(0,100)
@@ -79,7 +87,7 @@ plt.ticklabel_format(style='sci')
 labels = ["","10","20","30","40","50"]
 ax.set_xticklabels(labels)
 # print(label)
-plt.xlabel("Request Rate (x1000 requests per second)")
+plt.xlabel("Request Rate (x" + r'$10^3$' + " RPS)")
 # plt.title("Core" + str(i))
 plt.savefig('resid.png', format='png', dpi=300, bbox_inches='tight')
 plt.show()
