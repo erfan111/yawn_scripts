@@ -16,7 +16,7 @@ plt.rc('font', **font)
 plt.rc('legend', fontsize=11)
 convertfunc = lambda x: float(x[0:-2])
 a = []
-for i in range(8):
+for i in range(16):
     a.append(np.genfromtxt("residency" + str(i) + ".csv",  delimiter=","))
 b = []
 x = []
@@ -40,7 +40,7 @@ for i in range(len(a)):
 a = []
 for i in range(len(b)):
     temp = []
-    for j in range(len(b[i])):
+    for j in range(0,len(b[i]),2):
         sum = 0
         avg = 0
         for k in range(len(b[i][j])):
@@ -54,15 +54,15 @@ for i in range(len(b)):
     a.append(temp)
 # print("a", a)
 
-fig, ax = plt.subplots(figsize=(8,4))
+fig, ax = plt.subplots(figsize=(8,6))
 print("a", a)
 im = plt.imshow(a, cmap='hot_r', interpolation='nearest',vmin=1, vmax=6)
 ax.set_xticks(np.arange(0, 55, 5))
 # ax.set_xlim(0,50)
-ax.set_xticklabels(np.arange(0, 55, 5))
+ax.set_xticklabels(np.arange(0, 105, 10))
 ax.set_xlabel("Request Rate (x" + r'$10^3$' + " RPS)")
-ax.set_yticks(np.arange(0, 8, 1))
-ax.set_yticklabels(np.arange(1, 9, 1), **font_label)
+ax.set_yticks(np.arange(0, 16, 1))
+ax.set_yticklabels(np.arange(1, 17, 1), **font_label)
 ax.set_ylabel("Core Number")
 
 cbar = ax.figure.colorbar(im,ticks=[], orientation='horizontal', pad=0.2)
