@@ -10,7 +10,7 @@ do
 	do
     	echo "experiment started with rate=$i"
 
-    	temp=$(/home/erfan/mutilate/mutilate -s 10.254.254.100 -T 25 -c 25 -t 50 -w 5 -q $i -i fb_ia)
+    	temp=$(/home/erfan/mutilate/mutilate -t 60 -T 8 -Q 1000 -D 4 -C 4 -c 4 -q $i -s 10.254.254.121 -w 10 -i fb_ia -a 10.254.254.10 -a 10.254.254.9  --noload)
     	echo -n "$i," >> "t$j.csv"
     	echo $temp | awk '{ printf "%s,%s,%s,%s\n", $13,$19,$20,$21}' >> "t$j.csv"
     	echo $temp | awk '{ printf "avg=%s 95th=%s 99th=%s 99.9=%s\n", $13,$19,$20,$21 }'
@@ -18,8 +18,8 @@ do
 	done
 	sleep 30
 done
-python3 aggregate.py 5 21  new_on.csv
-cp t*.csv new_on/
+python3 aggregate.py 5 21  new_off.csv
+cp t*.csv new_off/
 rm t*.csv
 echo "experiment on finished"
 

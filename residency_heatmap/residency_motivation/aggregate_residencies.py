@@ -10,16 +10,16 @@ for i in range(int(sys.argv[1]), int(sys.argv[2])+int(sys.argv[3]), int(sys.argv
     rates.append(i)
     #os.remove("rate"+str(i)+".log")
 f = []
-for k in range(8):
+for k in range(24):
     f.append(open("residency" + str(k) + ".csv", "w"))
 
 for i in range(len(power_matrix)):  # i = rate 1000
-    for k in range(8):      # k = cpu 3
+    for k in range(24):      # k = cpu 3
         f[k].write("{}".format(rates[i]))
         for j in range(len(power_matrix[i][k])):
             f[k].write(",")
             f[k].write("{}".format(power_matrix[i][k][j]))
         f[k].write("\n")
 
-for k in range(8):
+for k in range(24):
     f[k].close()
