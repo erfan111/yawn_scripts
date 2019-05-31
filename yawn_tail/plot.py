@@ -11,13 +11,13 @@ from scipy.interpolate import spline
 
 font = {'family' : 'normal',
         # 'weight' : 'bold',
-        'size'   : 14}
+        'size'   : 20}
 font_label = {'family' : 'normal',
         # 'weight' : 'bold',
-        'size'   : 13}
+        'size'   : 20}
 
 plt.rc('font', **font)
-plt.rc('legend', fontsize=11)
+plt.rc('legend', fontsize=20)
 axs = plt.gca()
 latency_off_file = np.genfromtxt(sys.argv[1], delimiter=',')
 latency_menu_file = np.genfromtxt(sys.argv[2], delimiter=',')

@@ -8,13 +8,13 @@ from scipy import stats
 import matplotlib
 font = {'family' : 'normal',
         # 'weight' : 'bold',
-        'size'   : 16}
+        'size'   : 20}
 font_label = {'family' : 'normal',
         # 'weight' : 'bold',
-        'size'   : 16}
+        'size'   : 20}
 
 plt.rc('font', **font)
-plt.rc('legend', fontsize=14)
+plt.rc('legend', fontsize=20)
 # power files on -- off
 a = list(np.genfromtxt(sys.argv[1], delimiter=','))
 b = list(np.genfromtxt(sys.argv[2], delimiter=','))
@@ -110,13 +110,12 @@ ax2.set_xticklabels(["1", "10","20","30","40","50", "60", "70", "80", "90", "100
 # ax2.set_xticklabels(np.arange(1000,50000,5000))
 ax2.xaxis.grid(which="major")
 # ax2.set_yticks(np.arange(0, 40, 10))
-ax2.set_ylim(15,35)
+ax2.set_ylim(20,34)
 ax2.set_xlim(0,11)
 
 # locs, labs = plt.xticks()
 # plt.xticks(locs[1:])
-ax2.legend([bplot1["boxes"][0], bplot2["boxes"][0]], ['Default Linux (Menu)', 'C-states Disabled'],  loc=1,
-           ncol=2, mode="expand")
+ax2.legend([bplot1["boxes"][0], bplot2["boxes"][0]], ['Default Linux (Menu)', 'C-states Disabled'], loc=4)
 
 # fig.tight_layout()
 #

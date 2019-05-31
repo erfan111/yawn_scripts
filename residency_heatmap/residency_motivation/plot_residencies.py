@@ -6,13 +6,17 @@ import statsmodels.api as sm
 import matplotlib.pyplot as plt
 font = {'family' : 'normal',
         # 'weight' : 'bold',
-        'size'   : 14}
+        'size'   : 22}
 font_label = {'family' : 'normal',
         # 'weight' : 'bold',
-        'size'   : 10}
+        'size'   : 22}
+
+xfont_label = {'family' : 'normal',
+        # 'weight' : 'bold',
+        'size'   : 22}
 
 plt.rc('font', **font)
-plt.rc('legend', fontsize=14)
+plt.rc('legend', fontsize=24)
 convertfunc = lambda x: float(x[0:-2])
 a = []
 for i in range(8):
@@ -76,18 +80,18 @@ y = np.vstack(b[xx])
 print(y)
 # for i in range(len(x[1])):
 #     x[1][i] = x[1][i]/1000
-labels = ["BUSY","POLL", "c1", "c1e", "c3", "c6"]
+labels = ["BUSY","POLL", "C1", "C1e", "C3", "C6"]
 plt.stackplot(x[1], y, labels=labels, colors=["khaki","gold","orange","red","darkred", "black"])
-plt.ylabel("% Residency")
-plt.legend(prop={'size': 8})
+plt.ylabel("% Residency", **font_label)
+plt.legend(bbox_to_anchor=(1.50, 1), prop={'size': 22})
 plt.xlim(1000,50000)
 plt.ylim(0,100)
 plt.ticklabel_format(style='sci')
 # labels = [item.get_text() for item in ax.get_xticklabels()]
 labels = ["","10","20","30","40","50"]
-ax.set_xticklabels(labels)
+ax.set_xticklabels(labels, **xfont_label)
 # print(label)
-plt.xlabel("Request Rate (x" + r'$10^3$' + " RPS)")
+plt.xlabel("Request Rate (x" + r'$10^3$' + " RPS)", **font_label)
 # plt.title("Core" + str(i))
 plt.savefig('resid.png', format='png', dpi=300, bbox_inches='tight')
 plt.show()

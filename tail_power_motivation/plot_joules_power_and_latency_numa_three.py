@@ -12,21 +12,21 @@ from scipy.signal import lfilter
 
 font = {'family' : 'normal',
 # 'weight' : 'bold',
-'size'   : 18}
+'size'   : 20}
 font_label = {'family' : 'normal',
 # 'weight' : 'bold',
-'size'   : 18}
+'size'   : 20}
 
 plt.rc('font', **font)
-plt.rc('legend', fontsize=16)
+plt.rc('legend', fontsize=20)
 # power files on -- off
 a = list(np.genfromtxt(sys.argv[1], delimiter=','))
 b = list(np.genfromtxt(sys.argv[2], delimiter=','))
 e = list(np.genfromtxt(sys.argv[3], delimiter=','))
 # latency files  on -- off
-c = np.genfromtxt(sys.argv[4], delimiter=',')
-d = np.genfromtxt(sys.argv[5], delimiter=',')
-f = np.genfromtxt(sys.argv[6], delimiter=',')
+# c = np.genfromtxt(sys.argv[4], delimiter=',')
+# d = np.genfromtxt(sys.argv[5], delimiter=',')
+# f = np.genfromtxt(sys.argv[6], delimiter=',')
 
 
 def make_patch_spines_invisible(ax):
@@ -77,98 +77,98 @@ pos2 = np.array(range(len(b))) + 1
 pos3 = np.array(range(len(e))) + 1
 
 ############# LATENCY
-x = [int(i[0]/1000) for i in c]
-xnew = np.linspace(min(x),max(x),3000)
+# x = [int(i[0]/1000) for i in c]
+# xnew = np.linspace(min(x),max(x),3000)
 
 
 
-on_avg = [i[1] for i in c]
-off_avg = [i[1] for i in d]
-yawn_avg = [i[1] for i in f]
-on_95 = [i[2] for i in c]
-off_95 = [i[2] for i in d]
-yawn_95 = [i[2] for i in f]
-on_99 = [i[3] for i in c]
-off_99 = [i[3] for i in d]
-yawn_99 = [i[3] for i in f]
-on_999 = [i[4] for i in c]
-off_999 = [i[4] for i in d]
-yawn_999 = [i[4] for i in f]
+# on_avg = [i[1] for i in c]
+# off_avg = [i[1] for i in d]
+# yawn_avg = [i[1] for i in f]
+# on_95 = [i[2] for i in c]
+# off_95 = [i[2] for i in d]
+# yawn_95 = [i[2] for i in f]
+# on_99 = [i[3] for i in c]
+# off_99 = [i[3] for i in d]
+# yawn_99 = [i[3] for i in f]
+# on_999 = [i[4] for i in c]
+# off_999 = [i[4] for i in d]
+# yawn_999 = [i[4] for i in f]
 
-n = 4  # the larger n is, the smoother curve will be
-fb = [1.0 / n] * n
-fa = 1
-off_99_smooth = lfilter(fb,fa,off_99)
-on_99_smooth = lfilter(fb,fa,on_99)
-yawn_99_smooth = lfilter(fb,fa,yawn_99)
-off_95_smooth = lfilter(fb,fa,off_95)
-on_95_smooth = lfilter(fb,fa,on_95)
-yawn_95_smooth = lfilter(fb,fa,yawn_95)
-on_99_smooth2 = spline(x,on_99_smooth,xnew)
-off_99_smooth2 = spline(x,off_99_smooth,xnew)
-yawn_99_smooth2 = spline(x,yawn_99_smooth,xnew)
-on_95_smooth2= spline(x,on_95_smooth,xnew)
-off_95_smooth2 = spline(x,off_95_smooth,xnew)
-yawn_95_smooth2 = spline(x,yawn_95_smooth,xnew)
+# n = 4  # the larger n is, the smoother curve will be
+# fb = [1.0 / n] * n
+# fa = 1
+# off_99_smooth = lfilter(fb,fa,off_99)
+# on_99_smooth = lfilter(fb,fa,on_99)
+# yawn_99_smooth = lfilter(fb,fa,yawn_99)
+# off_95_smooth = lfilter(fb,fa,off_95)
+# on_95_smooth = lfilter(fb,fa,on_95)
+# yawn_95_smooth = lfilter(fb,fa,yawn_95)
+# on_99_smooth2 = spline(x,on_99_smooth,xnew)
+# off_99_smooth2 = spline(x,off_99_smooth,xnew)
+# yawn_99_smooth2 = spline(x,yawn_99_smooth,xnew)
+# on_95_smooth2= spline(x,on_95_smooth,xnew)
+# off_95_smooth2 = spline(x,off_95_smooth,xnew)
+# yawn_95_smooth2 = spline(x,yawn_95_smooth,xnew)
 
-############## 95
-fig, axs = plt.subplots(figsize=(7,6))
-axs.set_ylabel('95th Latency (us)',**font_label)
-# plt.title('Request Latency of different loads')
-# axs.set_yticks(np.arange(0, 800, 10))
-#axs.set_ylim(50,250)
-# axs.grid()
-axs.set_xticks(np.arange(0,110,20))
-axs.set_xticklabels(np.arange(0,110,20))
-axs.set_xlabel("Request Rate (x" + r'$10^3$' + " RPS)",**font_label)
-# xnew = x
-p1,p2, p3 = axs.plot(xnew, on_95_smooth2, 'r', xnew, yawn_95_smooth2, 'xkcd:green',xnew, off_95_smooth2, 'b:')
-p2.set(linestyle="dashed")
-plt.setp(p1, linewidth=3.0)
-plt.setp(p2, linewidth=4.0)
-plt.setp(p3, linewidth=2.0)
-# p1,p2 = plt.plot(x, on_avg, 'g', x, off_avg, 'g:')
-axs.legend((p1, p3, p2), ('Default Linux (Menu)', 'Yawn','Idle-states Disabled'),  loc=1,
-ncol=1)
-axs.xaxis.grid(which="major")
-axs.set_ylim(75,205)
-axs.set_xlim(7,102)
+# ############## 95
+# fig, axs = plt.subplots(figsize=(7,6))
+# axs.set_ylabel('95th Latency (us)',**font_label)
+# # plt.title('Request Latency of different loads')
+# # axs.set_yticks(np.arange(0, 800, 10))
+# #axs.set_ylim(50,250)
+# # axs.grid()
+# axs.set_xticks(np.arange(0,110,20))
+# axs.set_xticklabels(np.arange(0,110,20))
+# axs.set_xlabel("Request Rate (x" + r'$10^3$' + " RPS)",**font_label)
+# # xnew = x
+# p1,p2, p3 = axs.plot(xnew, on_95_smooth2, 'r', xnew, yawn_95_smooth2, 'xkcd:green',xnew, off_95_smooth2, 'b:')
+# p2.set(linestyle="dashed")
+# plt.setp(p1, linewidth=3.0)
+# plt.setp(p2, linewidth=4.0)
+# plt.setp(p3, linewidth=2.0)
+# # p1,p2 = plt.plot(x, on_avg, 'g', x, off_avg, 'g:')
+# axs.legend((p1, p3, p2), ('Default Linux (Menu)', 'Yawn','Idle-states Disabled'),  loc=1,
+# ncol=1)
+# axs.xaxis.grid(which="major")
+# axs.set_ylim(75,205)
+# axs.set_xlim(7,102)
 
-plt.savefig('numa_tail95.png', format='png', dpi=300, bbox_inches='tight')
+# plt.savefig('numa_tail95.png', format='png', dpi=300, bbox_inches='tight')
 
 
-##################### 99
+# ##################### 99
 
-fig, axs = plt.subplots(figsize=(7,6))
-axs.set_ylabel('99th Latency (us)',**font_label)
-# plt.title('Request Latency of different loads')
-# axs.set_yticks(np.arange(0, 800, 10))
-#axs.set_ylim(50,250)
-# axs.grid()
-axs.set_xticks(np.arange(0,110,20))
-axs.set_xticklabels(np.arange(0,110,20))
-axs.set_xlabel("Request Rate (x" + r'$10^3$' + " RPS)",**font_label)
-# xnew = x
-p1,p2, p3 = axs.plot(xnew, on_99_smooth2, 'r', xnew, yawn_99_smooth2, 'xkcd:green',xnew, off_99_smooth2, 'b:')
-p2.set(linestyle="dashed")
-plt.setp(p1, linewidth=3.0)
-plt.setp(p2, linewidth=4.0)
-plt.setp(p3, linewidth=2.0)
-# p1,p2 = plt.plot(x, on_avg, 'g', x, off_avg, 'g:')
-axs.legend((p1, p3, p2), ('Default Linux (Menu)', 'Yawn','Idle-states Disabled'),  loc=1,
-ncol=1)
-axs.xaxis.grid(which="major")
-axs.set_ylim(75,240)
-axs.set_xlim(7,102)
+# fig, axs = plt.subplots(figsize=(7,6))
+# axs.set_ylabel('99th Latency (us)',**font_label)
+# # plt.title('Request Latency of different loads')
+# # axs.set_yticks(np.arange(0, 800, 10))
+# #axs.set_ylim(50,250)
+# # axs.grid()
+# axs.set_xticks(np.arange(0,110,20))
+# axs.set_xticklabels(np.arange(0,110,20))
+# axs.set_xlabel("Request Rate (x" + r'$10^3$' + " RPS)",**font_label)
+# # xnew = x
+# p1,p2, p3 = axs.plot(xnew, on_99_smooth2, 'r', xnew, yawn_99_smooth2, 'xkcd:green',xnew, off_99_smooth2, 'b:')
+# p2.set(linestyle="dashed")
+# plt.setp(p1, linewidth=3.0)
+# plt.setp(p2, linewidth=4.0)
+# plt.setp(p3, linewidth=2.0)
+# # p1,p2 = plt.plot(x, on_avg, 'g', x, off_avg, 'g:')
+# axs.legend((p1, p3, p2), ('Default Linux (Menu)', 'Yawn','Idle-states Disabled'),  loc=1,
+# ncol=1)
+# axs.xaxis.grid(which="major")
+# axs.set_ylim(75,240)
+# axs.set_xlim(7,102)
 
-plt.savefig('numa_tail99.png', format='png', dpi=300, bbox_inches='tight')
+# plt.savefig('numa_tail99.png', format='png', dpi=300, bbox_inches='tight')
 
 
 ##### power
 
 fig, ax2 = plt.subplots(figsize=(7,6))
 
-plt.rc('legend', fontsize=16)
+plt.rc('legend', fontsize=20)
 
 # a = a[::5]
 # b = b[::5]
@@ -209,7 +209,7 @@ ax2.set_xlim(0,11)
 # ax2.set_ylim(46,80)
 # locs, labs = plt.xticks()
 # plt.xticks(locs[1:])
-ax2.legend([bplot1["boxes"][0], bplot2["boxes"][0], bplot3["boxes"][0]], ['Default Linux (Menu)', 'Yawn', 'Idle-states Disabled'],  loc="center right",
+ax2.legend([bplot1["boxes"][0], bplot2["boxes"][0], bplot3["boxes"][0]], ['Default Linux (Menu)', 'Yawn', 'C-states Disabled'],  loc="center right",
 ncol=1)
 
 # fig.tight_layout()
